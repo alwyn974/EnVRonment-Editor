@@ -249,7 +249,7 @@ public partial class Gizmo3D : Node3D
         VisibilityChanged += () => SetVisibility(Visible);
         GizmoDragged += (data) =>
         {
-            GD.Print("GizmoDragged: " + data.Mode + " " + data.Angle + " " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
+            // GD.Print("GizmoDragged: " + data.Mode + " " + data.Angle + " " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
         };
         GizmoReleased += (data) =>
         {

@@ -1,8 +1,9 @@
-[gd_scene load_steps=13 format=3 uid="uid://dw2fun6cmcxie"]
+[gd_scene load_steps=14 format=3 uid="uid://dw2fun6cmcxie"]
 
 [ext_resource type="Script" path="res://addons/Gizmo3DSharp/Gizmo3D.cs" id="2_wmj12"]
 [ext_resource type="Script" path="res://addons/Gizmo3DSharp/CameraSharp.cs" id="2_yxat0"]
 [ext_resource type="PackedScene" uid="uid://k7cn617qhred" path="res://kenney_mini_dungeon/coin.tscn" id="3_an4dy"]
+[ext_resource type="Script" path="res://NewScript.cs" id="3_i41rf"]
 [ext_resource type="PackedScene" uid="uid://bv1ou84a8bc8x" path="res://kenney_mini_dungeon/barrel.tscn" id="4_2y4ol"]
 [ext_resource type="PackedScene" uid="uid://ds8vk7frg2dkf" path="res://kenney_mini_dungeon/chest.tscn" id="5_ol1ha"]
 [ext_resource type="PackedScene" uid="uid://dwfqumpuu1kp2" path="res://kenney_mini_dungeon/column.tscn" id="6_dqtkw"]
@@ -65,7 +66,7 @@ transform = Transform3D(0.838671, 0.221525, -0.497553, 0, 0.913545, 0.406737, 0.
 shadow_enabled = true
 
 [node name="Gizmo3D" type="Node3D" parent="." node_paths=PackedStringArray("Target")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.625952, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.0147103, 0)
 script = ExtResource("2_wmj12")
 Target = NodePath("../Objects/coin")
 
@@ -77,7 +78,9 @@ script = ExtResource("2_yxat0")
 Gizmo = NodePath("../Gizmo3D")
 Message = NodePath("../UI/Message")
 
-[node name="Objects" type="Node3D" parent="."]
+[node name="Objects" type="Node3D" parent="." node_paths=PackedStringArray("gizmo")]
+script = ExtResource("3_i41rf")
+gizmo = NodePath("../Gizmo3D")
 
 [node name="Floor" type="MeshInstance3D" parent="Objects"]
 mesh = SubResource("PlaneMesh_5ilx2")

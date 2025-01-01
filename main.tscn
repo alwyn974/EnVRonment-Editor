@@ -1,0 +1,35 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfqnt42lo5kmy"]
+
+[sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_v2yno"]
+
+[sub_resource type="Sky" id="Sky_b7eyd"]
+sky_material = SubResource("PanoramaSkyMaterial_v2yno")
+
+[sub_resource type="Environment" id="Environment_wajug"]
+background_mode = 2
+sky = SubResource("Sky_b7eyd")
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 0
+offset_right = 563.0
+offset_bottom = 648.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(563, 648)
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+environment = SubResource("Environment_wajug")
+
+[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 0.86438, 0.502839, 0, -0.502839, 0.86438, 0, 1.00515, 1.78431)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]

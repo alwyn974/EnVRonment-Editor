@@ -1,5 +1,6 @@
 [gd_scene load_steps=14 format=3 uid="uid://dw2fun6cmcxie"]
 
+[ext_resource type="Script" path="res://addons/Gizmo3DSharp/DemoSharp.cs" id="1_3dgbe"]
 [ext_resource type="Script" path="res://addons/Gizmo3DSharp/Gizmo3D.cs" id="2_wmj12"]
 [ext_resource type="Script" path="res://addons/Gizmo3DSharp/CameraSharp.cs" id="2_yxat0"]
 [ext_resource type="PackedScene" uid="uid://k7cn617qhred" path="res://kenney_mini_dungeon/coin.tscn" id="3_an4dy"]
@@ -9,41 +10,6 @@
 [ext_resource type="PackedScene" uid="uid://dwfqumpuu1kp2" path="res://kenney_mini_dungeon/column.tscn" id="6_dqtkw"]
 [ext_resource type="PackedScene" uid="uid://b0viia12g476x" path="res://kenney_mini_dungeon/rocks.tscn" id="7_ydtyi"]
 [ext_resource type="PackedScene" uid="uid://b15l6tnysy5yl" path="res://kenney_mini_dungeon/stairs.tscn" id="8_hkrk7"]
-
-[sub_resource type="CSharpScript" id="CSharpScript_m6d5y"]
-script/source = "using Godot;
-
-namespace Gizmo3DPlugin;
-
-public partial class DemoSharp : Node3D
-{
-
-	[Export]
-	public Gizmo3D Gizmo { get; private set; }
-
-    public override void _UnhandledInput(InputEvent @event)
-    {
-		// Prevent object picking is user is interacting with the gizmo
-		if (Gizmo.Hovering || Gizmo.Editing)
-			return;
-        if (@event is InputEventMouseButton button && button.ButtonIndex == MouseButton.Left && button.Pressed)
-		{
-			Camera3D camera = GetViewport().GetCamera3D();
-			Vector3 dir = camera.ProjectRayNormal(button.Position);
-			Vector3 from = camera.ProjectRayOrigin(button.Position);
-			var result = GetWorld3D().DirectSpaceState.IntersectRay(new PhysicsRayQueryParameters3D()
-			{
-				From = from,
-				To = from + dir * 1000.0f
-			});
-			if (result.Count == 0)
-				return;
-			Node collider = (Node) result[\"collider\"];
-			Gizmo.Target = collider.GetParent<Node3D>();
-		}
-    }
-}
-"
 
 [sub_resource type="Environment" id="Environment_nlrnx"]
 
@@ -55,7 +21,7 @@ material = SubResource("StandardMaterial3D_ggl13")
 size = Vector2(50, 50)
 
 [node name="DemoSharp" type="Node3D" node_paths=PackedStringArray("Gizmo")]
-script = SubResource("CSharpScript_m6d5y")
+script = ExtResource("1_3dgbe")
 Gizmo = NodePath("Gizmo3D")
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]

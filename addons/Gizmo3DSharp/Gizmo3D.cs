@@ -274,10 +274,11 @@ public partial class Gizmo3D : Node3D
         }
         else if (@event is InputEventMouseButton button && button.ButtonIndex == MouseButton.Left)
         {
+            if (!button.Pressed && Editing)
+                EmitSignal(SignalName.GizmoReleased, Edit);
             Editing = button.Pressed;
             if (!Editing)
             {
-                EmitSignal(SignalName.GizmoReleased, Edit);
                 return;
             }
             Edit.MousePos = button.Position;

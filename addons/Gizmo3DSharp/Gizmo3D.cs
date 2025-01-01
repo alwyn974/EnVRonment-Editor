@@ -187,11 +187,11 @@ public partial class Gizmo3D : Node3D
     
     // Define the signals
     [Signal]
-    public delegate void GizmoSelectedEventHandler(string mode, Transform3D transform, string plane);
+    public delegate void GizmoSelectedEventHandler(EditData data);
     [Signal]
-    public delegate void GizmoDraggedEventHandler(string mode, Transform3D transform, string plane);
+    public delegate void GizmoDraggedEventHandler(EditData data);
     [Signal]
-    public delegate void GizmoReleasedEventHandler(string mode, Transform3D transform, string plane);
+    public delegate void GizmoReleasedEventHandler(EditData data);
 
     ArrayMesh[] MoveGizmo = new ArrayMesh[3];
     ArrayMesh[] MovePlaneGizmo = new ArrayMesh[3];
@@ -225,7 +225,7 @@ public partial class Gizmo3D : Node3D
     public enum TransformMode { None, Rotate, Translate, Scale };
     public enum TransformPlane { View, X, Y, Z, YZ, XZ, XY, };
 
-    struct EditData
+    public partial class EditData : GodotObject
     {
         public Transform3D TargetOriginal, TargetGlobal;
         public TransformMode Mode;
@@ -233,6 +233,11 @@ public partial class Gizmo3D : Node3D
         public Vector3 ClickRay, ClickRayPos;
         public Vector3 Center;
         public Vector2 MousePos;
+        /// <summary>
+        /// Rotation angle in degrees
+        /// </summary>
+        public float Angle;
+        public Vector3 Motion;
     };
 
     public override void _Ready()
@@ -242,17 +247,17 @@ public partial class Gizmo3D : Node3D
         InitGizmoInstance();
         UpdateTransformGizmoView();
         VisibilityChanged += () => SetVisibility(Visible);
-        GizmoDragged += (mode, target, plane) =>
+        GizmoDragged += (data) =>
         {
-            GD.Print("GizmoDragged: " + mode + " " + target + " " + plane);
+            GD.Print("GizmoDragged: " + data.Mode + " " + data.Angle + " " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
         };
-        GizmoReleased += (mode, target, plane) =>
+        GizmoReleased += (data) =>
         {
-            GD.Print("GizmoReleased: " + mode + " " + target + " " + plane);
+            GD.Print("GizmoReleased: " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
         };
-        GizmoSelected += (mode, target, plane) =>
+        GizmoSelected += (data) =>
         {
-            GD.Print("GizmoSelected: " + mode + " " + target + " " + plane);
+            GD.Print("GizmoSelected: " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
         };
     }
 
@@ -272,14 +277,14 @@ public partial class Gizmo3D : Node3D
             Editing = button.Pressed;
             if (!Editing)
             {
-                EmitSignal(SignalName.GizmoReleased, Edit.Mode.ToString(), Target.GlobalTransform, Edit.Plane.ToString());
+                EmitSignal(SignalName.GizmoReleased, Edit);
                 return;
             }
             Edit.MousePos = button.Position;
             Editing = TransformGizmoSelect(button.Position);
             if (Editing)
             {
-                EmitSignal(SignalName.GizmoSelected, Edit.Mode.ToString(), Target.GlobalTransform, Edit.Plane.ToString());
+                EmitSignal(SignalName.GizmoSelected, Edit);
             }
         }
         else if (@event is InputEventMouseMotion motion)
@@ -288,7 +293,6 @@ public partial class Gizmo3D : Node3D
             {
                 Edit.MousePos = motion.Position;
                 UpdateTransform(false);
-                EmitSignal(SignalName.GizmoDragged, Edit.Mode.ToString(), Target.GlobalTransform, Edit.Plane.ToString());
                 return;
             }
             Hovering = TransformGizmoSelect(motion.Position, true);
@@ -1467,6 +1471,7 @@ void fragment() {
                     snap = RotateSnap;
 
                 angle = Mathf.Snapped(Mathf.RadToDeg(angle), snap);
+                Edit.Angle = angle;
                 Message = TranslationServer.Translate("Rotating") + $": {angle:0.###} " + TranslationServer.Translate("degrees");
                 angle = Mathf.DegToRad(angle);
 
@@ -1484,6 +1489,8 @@ void fragment() {
         bool localCoords = LocalCoords && Edit.Plane != TransformPlane.View;
         Transform3D newTransform = ComputeTransform(Edit.Mode, Edit.TargetGlobal, Edit.TargetOriginal, motion, snap, localCoords, Edit.Plane != TransformPlane.View);
         TransformGizmoApply(Target, newTransform, localCoords);
+        Edit.Motion = motion;
+        EmitSignal(SignalName.GizmoDragged, Edit);
     }
 
     void ComputeEdit(Vector2 point)

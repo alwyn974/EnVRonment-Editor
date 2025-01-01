@@ -2,20 +2,20 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://brdsjfnvk520m"
-path.s3tc="res://.godot/imported/fire_extinguisher_0.png-1541d044b274d25e68df6d0263e531df.s3tc.ctex"
+uid="uid://bgu4pxanee6ut"
+path.s3tc="res://.godot/imported/fire_extinguisher_1.png-ee105d7986be24a9740c996c6cb2eebf.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
 }
 generator_parameters={
-"md5": "296c556bbaac50e56bb0ec32b0179ef5"
+"md5": "9b2a448248c0cda848f71924e750cec9"
 }
 
 [deps]
 
-source_file="res://assets/fire_extinguisher_0.png"
-dest_files=["res://.godot/imported/fire_extinguisher_0.png-1541d044b274d25e68df6d0263e531df.s3tc.ctex"]
+source_file="res://assets/models/fire_extinguisher_1.png"
+dest_files=["res://.godot/imported/fire_extinguisher_1.png-ee105d7986be24a9740c996c6cb2eebf.s3tc.ctex"]
 
 [params]
 

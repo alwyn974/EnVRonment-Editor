@@ -1,4 +1,7 @@
-[gd_scene load_steps=4 format=3 uid="uid://cfqnt42lo5kmy"]
+[gd_scene load_steps=6 format=3 uid="uid://cfqnt42lo5kmy"]
+
+[ext_resource type="PackedScene" uid="uid://bep4t8tg6u7wk" path="res://assets/models/fire_extinguisher.glb" id="1_djsng"]
+[ext_resource type="Script" path="res://src/debug_camera3d.gd" id="1_ifwwm"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_v2yno"]
 
@@ -19,17 +22,29 @@ grow_vertical = 2
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 layout_mode = 0
-offset_right = 563.0
+offset_left = 188.0
+offset_right = 992.0
 offset_bottom = 648.0
 stretch = true
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-size = Vector2i(563, 648)
+handle_input_locally = false
+size = Vector2i(804, 648)
+render_target_update_mode = 4
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
 environment = SubResource("Environment_wajug")
 
 [node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
 transform = Transform3D(1, 0, 0, 0, 0.86438, 0.502839, 0, -0.502839, 0.86438, 0, 1.00515, 1.78431)
+script = ExtResource("1_ifwwm")
 
-[node name="DirectionalLight3D" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+[node name="Sun" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+shadow_enabled = true
+directional_shadow_mode = 0
+
+[node name="ObjectsPivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+
+[node name="Objects" type="Node3D" parent="SubViewportContainer/SubViewport/ObjectsPivot"]
+
+[node name="Sketchfab_Scene" parent="SubViewportContainer/SubViewport/ObjectsPivot/Objects" instance=ExtResource("1_djsng")]

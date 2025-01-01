@@ -1,3 +1,27 @@
-# Godot 4+ specific ignores
+# IDEs
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+/.vscode
+/.fleet
+
+# Godot specific
+.import/
+import/
 .godot/
-/android/
+godot/
+*.translation
+*.unwrap_cache
+
+# OS specific
+.directory
+.DS_Store
+[Tt]humbs.db
+[Dd]esktop.ini
+
+data_*_windows_x86_64
+*.sln.DotSettings.user

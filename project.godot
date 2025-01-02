@@ -17,10 +17,14 @@ config/features=PackedStringArray("4.3", "C#", "Forward Plus")
 boot_splash/image="res://icon.png"
 config/icon="res://icon.svg"
 
+[display]
+
+window/stretch/mode="canvas_items"
+
 [dotnet]
 
 project/assembly_name="EnVRonment - Editor"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/Gizmo3DSharp/plugin.cfg", "res://addons/wakatime/plugin.cfg")
+enabled=PackedStringArray("res://addons/wakatime/plugin.cfg")

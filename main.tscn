@@ -1,7 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cfqnt42lo5kmy"]
+[gd_scene load_steps=10 format=3 uid="uid://cfqnt42lo5kmy"]
 
-[ext_resource type="PackedScene" uid="uid://bep4t8tg6u7wk" path="res://assets/models/fire_extinguisher.glb" id="1_djsng"]
-[ext_resource type="Script" path="res://src/debug_camera3d.gd" id="1_ifwwm"]
+[ext_resource type="Script" path="res://src/camera/FreelookCamera3D.cs" id="1_50xsv"]
+[ext_resource type="Script" path="res://src/gizmos/Gizmo3D.cs" id="2_ugnwi"]
+[ext_resource type="Script" path="res://src/gizmos/GizmoSelect.cs" id="3_bdecd"]
+[ext_resource type="PackedScene" uid="uid://k7cn617qhred" path="res://kenney_mini_dungeon/coin.tscn" id="5_tsyjd"]
+[ext_resource type="PackedScene" uid="uid://bv1ou84a8bc8x" path="res://kenney_mini_dungeon/barrel.tscn" id="6_f8mrt"]
+[ext_resource type="PackedScene" uid="uid://uen5pkhygcvj" path="res://extinguisher.tscn" id="6_wxt4n"]
 
 [sub_resource type="PanoramaSkyMaterial" id="PanoramaSkyMaterial_v2yno"]
 
@@ -12,39 +16,47 @@ sky_material = SubResource("PanoramaSkyMaterial_v2yno")
 background_mode = 2
 sky = SubResource("Sky_b7eyd")
 
-[node name="Control" type="Control"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+[node name="UI" type="CanvasLayer"]
+follow_viewport_enabled = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-layout_mode = 0
-offset_left = 188.0
-offset_right = 992.0
+offset_left = 174.0
+offset_right = 978.0
 offset_bottom = 648.0
-stretch = true
+size_flags_horizontal = 3
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+[node name="GameView" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(804, 648)
 render_target_update_mode = 4
 
-[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/SubViewport"]
+[node name="WorldEnvironment" type="WorldEnvironment" parent="SubViewportContainer/GameView"]
 environment = SubResource("Environment_wajug")
 
-[node name="Camera3D" type="Camera3D" parent="SubViewportContainer/SubViewport"]
-transform = Transform3D(1, 0, 0, 0, 0.86438, 0.502839, 0, -0.502839, 0.86438, 0, 1.00515, 1.78431)
-script = ExtResource("1_ifwwm")
+[node name="FreelookCamera3D" type="Camera3D" parent="SubViewportContainer/GameView" node_paths=PackedStringArray("Gizmo")]
+transform = Transform3D(1, 0, 0, 0, 0.866025, 0.5, 0, -0.5, 0.866025, 0, 1.005, 1.784)
+script = ExtResource("1_50xsv")
+Gizmo = NodePath("../Scene/Gizmo3D")
 
-[node name="Sun" type="DirectionalLight3D" parent="SubViewportContainer/SubViewport"]
+[node name="Sun" type="DirectionalLight3D" parent="SubViewportContainer/GameView"]
+transform = Transform3D(0.977091, 0.126265, -0.17132, 0.0123927, 0.769869, 0.638081, 0.212461, -0.625587, 0.750668, 0, 5, 5)
 shadow_enabled = true
-directional_shadow_mode = 0
 
-[node name="ObjectsPivot" type="Node3D" parent="SubViewportContainer/SubViewport"]
+[node name="Scene" type="Node3D" parent="SubViewportContainer/GameView" node_paths=PackedStringArray("Gizmo")]
+script = ExtResource("3_bdecd")
+Gizmo = NodePath("Gizmo3D")
 
-[node name="Objects" type="Node3D" parent="SubViewportContainer/SubViewport/ObjectsPivot"]
+[node name="Gizmo3D" type="Node3D" parent="SubViewportContainer/GameView/Scene" node_paths=PackedStringArray("Target")]
+script = ExtResource("2_ugnwi")
+Target = NodePath("../Objects/coin")
 
-[node name="Sketchfab_Scene" parent="SubViewportContainer/SubViewport/ObjectsPivot/Objects" instance=ExtResource("1_djsng")]
+[node name="Objects" type="Node3D" parent="SubViewportContainer/GameView/Scene"]
+
+[node name="coin" parent="SubViewportContainer/GameView/Scene/Objects" instance=ExtResource("5_tsyjd")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.459804, 0.061168, -0.0387679)
+
+[node name="barrel" parent="SubViewportContainer/GameView/Scene/Objects" instance=ExtResource("6_f8mrt")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0342803, 0, -1)
+
+[node name="Sketchfab_Scene2" parent="SubViewportContainer/GameView/Scene/Objects" instance=ExtResource("6_wxt4n")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.704619, 0, 0)

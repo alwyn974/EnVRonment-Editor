@@ -6,4 +6,10 @@
     <EnableDynamicLoading>true</EnableDynamicLoading>
     <RootNamespace>EnVRonmentEditor</RootNamespace>
   </PropertyGroup>
+  <ItemGroup>
+    <Folder Include="addons\Gizmo3DSharp\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="src\gizmos\LICENSE" />
+  </ItemGroup>
 </Project>

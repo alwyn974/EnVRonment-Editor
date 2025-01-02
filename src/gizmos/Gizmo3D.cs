@@ -9,6 +9,7 @@ namespace Gizmo3DPlugin;
 /// - https://github.com/godotengine/godot/blob/master/editor/plugins/node_3d_editor_plugin.h
 /// - https://github.com/godotengine/godot/blob/master/editor/plugins/node_3d_editor_plugin.cpp
 /// </summary>
+[GlobalClass]
 public partial class Gizmo3D : Node3D
 {
     const float DEFAULT_FLOAT_STEP = 0.001f;
@@ -28,17 +29,17 @@ public partial class Gizmo3D : Node3D
     [Export]
     public ToolMode Mode { get; set; } = ToolMode.All;
 
-    uint layers = 1;
+    uint _layers = 1;
     /// <summary>
     /// The 3D render layers this gizmo is visible on.
     /// </summary>
     [Export(PropertyHint.Layers3DRender)]
     public uint Layers
     {
-        get => layers;
+        get => _layers;
         set
         {
-            layers = value;
+            _layers = value;
             if (!IsNodeReady())
                 return;
             for (int i = 0; i < 3; i++)
@@ -75,13 +76,13 @@ public partial class Gizmo3D : Node3D
     /// <summary>
     /// If the user is currently interacting with is gizmo.
     /// </summary>
-    bool editing;
+    bool _editing;
     public bool Editing
     {
-        get => editing;
+        get => _editing;
         private set
         {
-            editing = value;
+            _editing = value;
             if (!value)
                 Message = "";
         }

@@ -77,6 +77,7 @@ In Godot, create a build preset: Project > Export as... > Add... > Windows Deskt
   - [ ] Implement the TCP protocol or add a webview to the editor
 - [ ] Gizmos
   - [ ] Fix the issue with gltf models, gizmos are misplaced
+  - [ ] Click outside the gizmo to deselect it
 - [ ] History
     - [ ] Add a way to undo
     - [ ] Add a way to redo

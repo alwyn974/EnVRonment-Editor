@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://uen5pkhygcvj"]
 
-[ext_resource type="PackedScene" uid="uid://bep4t8tg6u7wk" path="res://assets/models/fire_extinguisher.glb" id="1_ooekx"]
+[ext_resource type="PackedScene" uid="uid://btf1qebgweld5" path="res://assets/models/fire_extinguisher.glb" id="1_ooekx"]
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_hu5r4"]
 size = Vector3(1, 1, 3.33704)

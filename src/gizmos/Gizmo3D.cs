@@ -250,7 +250,8 @@ public partial class Gizmo3D : Node3D
         VisibilityChanged += () => SetVisibility(Visible);
         GizmoDragged += (data) =>
         {
-            // GD.Print("GizmoDragged: " + data.Mode + " " + data.Angle + " " + data.Mode + " " + data.TargetGlobal + " " + data.Plane);
+            var text = $"Dragged: {data.Mode} - {data.Plane}\nOld Pos: {data.TargetGlobal.Origin} - New Pos: {data.TargetGlobal.Origin + data.Motion}";
+            GD.Print(text);
         };
         GizmoReleased += (data) =>
         {
@@ -1526,14 +1527,15 @@ void fragment() {
             bounds = new();
         bounds = xfomToTopLevelParentSpace * bounds;
 
-        foreach (Node child in parent.GetChildren())
+        foreach (var child in parent.GetChildren())
         {
             if (child is not Node3D n3d)
                 continue;
             if (!(omitTopLevel && n3d.TopLevel))
             {
-                Aabb child_bounds = CalculateSpatialBounds(n3d, omitTopLevel, tBoundsOrientation);
-                bounds = bounds.Merge(child_bounds);
+                var childBounds = CalculateSpatialBounds(n3d, omitTopLevel, tBoundsOrientation);
+                GD.Print($"child: {child.Name} - bounds: {childBounds}");
+                bounds = bounds.Merge(childBounds);
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using Godot;
+﻿using EnVRonmentEditor;
+using Godot;
 
 namespace Gizmo3DPlugin;
 
@@ -14,18 +15,32 @@ public partial class GizmoSelect : Node3D
             return;
         if (@event is InputEventMouseButton button && button.ButtonIndex == MouseButton.Left && button.Pressed)
         {
-            Camera3D camera = GetViewport().GetCamera3D();
-            Vector3 dir = camera.ProjectRayNormal(button.Position);
-            Vector3 from = camera.ProjectRayOrigin(button.Position);
+            var camera = GetViewport().GetCamera3D();
+            var dir = camera.ProjectRayNormal(button.Position);
+            var from = camera.ProjectRayOrigin(button.Position);
             var result = GetWorld3D().DirectSpaceState.IntersectRay(new PhysicsRayQueryParameters3D()
             {
                 From = from,
                 To = from + dir * 1000.0f
             });
+            // TODO: handle deselection
             if (result.Count == 0)
+            {
+                // Gizmo.Target = null;
                 return;
+            }
             Node collider = (Node) result["collider"];
-            Gizmo.Target = collider.GetParent<Node3D>();
+            // Gizmo.Target = collider.GetParent<Node3D>();
+            Gizmo.Target = GetInspectableNode(collider);
         }
+    }
+    
+    public static Node3DInspectable GetInspectableNode(Node node)
+    {
+        if (node is Node3DInspectable inspectable)
+            return inspectable;
+        if (node.GetParent() == null)
+            return null;
+        return GetInspectableNode(node.GetParent());
     }
 }

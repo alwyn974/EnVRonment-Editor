@@ -3,13 +3,13 @@
 importer="scene"
 importer_version=1
 type="PackedScene"
-uid="uid://btf1qebgweld5"
-path="res://.godot/imported/fire_extinguisher.glb-e9676ebdf8b63ea9fa301c927fe40364.scn"
+uid="uid://copq0ea5mj2vu"
+path="res://.godot/imported/table_desk_-_3mb.glb-538f66e5b2858a9bf380f143bbe9a91c.scn"
 
 [deps]
 
-source_file="res://assets/models/fire_extinguisher.glb"
-dest_files=["res://.godot/imported/fire_extinguisher.glb-e9676ebdf8b63ea9fa301c927fe40364.scn"]
+source_file="res://assets/models/table_desk_-_3mb.glb"
+dest_files=["res://.godot/imported/table_desk_-_3mb.glb-538f66e5b2858a9bf380f143bbe9a91c.scn"]
 
 [params]
 

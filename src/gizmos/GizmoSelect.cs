@@ -6,7 +6,7 @@ namespace Gizmo3DPlugin;
 public partial class GizmoSelect : Node3D
 {
     [Export]
-    public Gizmo3D Gizmo { get; private set; }
+    public Gizmo3DCSharp Gizmo { get; private set; }
 
     public override void _UnhandledInput(InputEvent @event)
     {
@@ -30,8 +30,8 @@ public partial class GizmoSelect : Node3D
                 return;
             }
             Node collider = (Node) result["collider"];
-            // Gizmo.Target = collider.GetParent<Node3D>();
-            Gizmo.Target = GetInspectableNode(collider);
+            Gizmo.Target = collider.GetParent<Node3D>();
+            // Gizmo.Target = GetInspectableNode(collider);
         }
     }
     

@@ -23,7 +23,7 @@ public partial class FreelookCamera3D : Camera3D
     [Export] public float MinSpeed { get; set; } = 0.2f;
 
     [Export]
-    public Gizmo3D Gizmo { get; private set; }
+    public Gizmo3DCSharp Gizmo { get; private set; }
     [Export]
     public Label Message { get; private set; }
     

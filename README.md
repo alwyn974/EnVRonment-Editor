@@ -78,6 +78,7 @@ In Godot, create a build preset: Project > Export as... > Add... > Windows Deskt
 - [ ] Gizmos
   - [ ] Fix the issue with gltf models, gizmos are misplaced
   - [ ] Click outside the gizmo to deselect it
+  - [ ] Fix offset
 - [ ] History
     - [ ] Add a way to undo
     - [ ] Add a way to redo

@@ -10,6 +10,7 @@ class_name DebugCamera3D
 @export_range(1, 100, 0.1) var boost_speed_multiplier : float = 3.0
 @export var max_speed : float = 1000
 @export var min_speed : float = 0.2
+@export var gizmo: Gizmo3D
 
 @onready var _velocity = default_velocity
 
@@ -36,6 +37,9 @@ func _process(delta: float) -> void:
 		translate(direction * _velocity * delta * boost_speed_multiplier)
 	else:
 		translate(direction * _velocity * delta)
+		
+	if gizmo.editing:
+		return
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -54,9 +58,3 @@ func _unhandled_input(event: InputEvent) -> void:
 			MOUSE_BUTTON_WHEEL_DOWN: # decrease fly velocity
 				_velocity = clamp(_velocity / speed_scale, min_speed, max_speed)
 	
-	# Toggle cameras
-	if event is InputEventKey && event.is_pressed():
-		if event.keycode == KEY_MINUS:
-			var cam := main_cam
-			cam.current = !cam.current
-			current = !cam.current

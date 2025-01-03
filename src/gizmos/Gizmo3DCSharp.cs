@@ -10,7 +10,7 @@ namespace Gizmo3DPlugin;
 /// - https://github.com/godotengine/godot/blob/master/editor/plugins/node_3d_editor_plugin.cpp
 /// </summary>
 [GlobalClass]
-public partial class Gizmo3D : Node3D
+public partial class Gizmo3DCSharp : Node3D
 {
     const float DEFAULT_FLOAT_STEP = 0.001f;
     const float MAX_Z = 1000000.0f;
@@ -1519,13 +1519,13 @@ void fragment() {
         if (parent == null)
             return new Aabb(new(-0.2f, -0.2f, -0.2f), new(0.4f, 0.4f, 0.4f));
 
-        Transform3D xfomToTopLevelParentSpace = tBoundsOrientation.AffineInverse() * parent.GlobalTransform;
+        Transform3D xformToTopLevelParentSpace = tBoundsOrientation.AffineInverse() * parent.GlobalTransform;
 
         if (parent is VisualInstance3D vi)
             bounds = vi.GetAabb();
         else
             bounds = new();
-        bounds = xfomToTopLevelParentSpace * bounds;
+        bounds = xform(xformToTopLevelParentSpace, bounds);
 
         foreach (var child in parent.GetChildren())
         {
@@ -1534,12 +1534,41 @@ void fragment() {
             if (!(omitTopLevel && n3d.TopLevel))
             {
                 var childBounds = CalculateSpatialBounds(n3d, omitTopLevel, tBoundsOrientation);
-                GD.Print($"child: {child.Name} - bounds: {childBounds}");
                 bounds = bounds.Merge(childBounds);
             }
         }
 
         return bounds;
+    }
+
+    static Aabb xform(Transform3D xfom, Aabb bounds)
+    {
+        Vector3 min = bounds.Position;
+        Vector3 max = bounds.Position + bounds.Size;
+        Vector3 tmin = new Vector3();
+        Vector3 tmax = new Vector3();
+
+        for (int i = 0; i < 3; i++)
+        {
+            tmin[i] = tmax[i] = xfom.Origin[i];
+            for (int j = 0; j < 3; j++)
+            {
+                float e = xfom.Basis[j, i] * min[j];
+                float f = xfom.Basis[j, i] * max[j];
+                if (e < f)
+                {
+                    tmin[i] += e;
+                    tmax[i] += f;
+                }
+                else
+                {
+                    tmin[i] += f;
+                    tmax[i] += e;
+                }
+            }
+        }
+
+        return new Aabb(tmin, tmax - tmin);
     }
 
     Vector3 GetRayPos(Vector2 pos) => GetViewport().GetCamera3D().ProjectRayOrigin(pos);

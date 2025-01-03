@@ -10,6 +10,10 @@
     <Folder Include="addons\Gizmo3DSharp\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="src\Gizmo3DScript\edit_data.gd" />
+    <Content Include="src\Gizmo3DScript\gizmo3D.gd" />
+    <Content Include="src\Gizmo3DScript\gizmo_helper.gd" />
+    <Content Include="src\Gizmo3DScript\gizmo_select.gd" />
     <Content Include="src\gizmos\LICENSE" />
   </ItemGroup>
 </Project>

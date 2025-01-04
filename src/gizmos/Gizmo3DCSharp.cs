@@ -1525,7 +1525,7 @@ void fragment() {
             bounds = vi.GetAabb();
         else
             bounds = new();
-        bounds = xform(xformToTopLevelParentSpace, bounds);
+        bounds = xformToTopLevelParentSpace * bounds;
 
         foreach (var child in parent.GetChildren())
         {
@@ -1539,36 +1539,6 @@ void fragment() {
         }
 
         return bounds;
-    }
-
-    static Aabb xform(Transform3D xfom, Aabb bounds)
-    {
-        Vector3 min = bounds.Position;
-        Vector3 max = bounds.Position + bounds.Size;
-        Vector3 tmin = new Vector3();
-        Vector3 tmax = new Vector3();
-
-        for (int i = 0; i < 3; i++)
-        {
-            tmin[i] = tmax[i] = xfom.Origin[i];
-            for (int j = 0; j < 3; j++)
-            {
-                float e = xfom.Basis[j, i] * min[j];
-                float f = xfom.Basis[j, i] * max[j];
-                if (e < f)
-                {
-                    tmin[i] += e;
-                    tmax[i] += f;
-                }
-                else
-                {
-                    tmin[i] += f;
-                    tmax[i] += e;
-                }
-            }
-        }
-
-        return new Aabb(tmin, tmax - tmin);
     }
 
     Vector3 GetRayPos(Vector2 pos) => GetViewport().GetCamera3D().ProjectRayOrigin(pos);

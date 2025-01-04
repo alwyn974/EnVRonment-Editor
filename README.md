@@ -1,9 +1,4 @@
-﻿> [!NOTE]
-> **Please carefully read ALL the _setup instructions_, as we are using a Custom Build of Godot.**
->
-> Our Godot Build was last updated on the <ins>18/09/2024</ins>.
-
-# EnVRonment Editor
+﻿# EnVRonment Editor
 
 This is the repository for the EnVRonment Editor, a Godot-based editor for the EnVRonment platform.
 
@@ -13,34 +8,7 @@ Documentation https://editor.docs.envronment.com
 
 ### How to setup Godot for development
 
-Download our [Custom Build of Godot 4.3.1 from EnVRonment S3](https://s3.envronment.com/download-public/godot-4.3.1.7z).
-
-You can extract it in a directory located anywhere, this is your *Godot install folder*.
-
-After that, you'll need to setup the csharp dependencies with the following commands,
-the `godot-nuget` is the absolute path to the directory `GodotNuget` in the archive:
-
-```bat
-dotnet nuget add source <godot-nuget> --name GodotNuget
-```
-
-From this folder, run Godot from `godot.windows.editor.x86_64.mono.exe`.
-
-### How to setup Godot to export and build (Windows)
-
-From your Godot install folder, run the following commands to create your prepare your build preset. **You have to do it each time you use a new build of Godot.**
-
-CMD.exe:
-```bat
-mkdir %APPDATA%\Godot\export_templates\4.3.1.rc.mono
-copy godot.windows.template_debug.x86_64.mono.exe %APPDATA%\Godot\export_templates\4.3.1.rc.mono\windows_debug_x86_64.exe
-copy godot.windows.template_release.x86_64.mono.exe %APPDATA%\Godot\export_templates\4.3.1.rc.mono\windows_release_x86_64.exe
-pause
-```
-
-In Godot, create a build preset: Project > Export as... > Add... > Windows Desktop. Your build should then work.
-
-**For production builds only:** You also have to download [rcedit-x64.exe](https://github.com/electron/rcedit/releases). After that put the path of the executable in Godot: Editor > Editor Settings... > Export > Windows > Rcedit.
+Download https://godotengine.org/download/archive/4.4-dev7/
 
 ## TODO
 
@@ -76,7 +44,7 @@ In Godot, create a build preset: Project > Export as... > Add... > Windows Deskt
 - [ ] Visual Scripting
   - [ ] Implement the TCP protocol or add a webview to the editor
 - [ ] Gizmos
-  - [ ] Fix the issue with gltf models, gizmos are misplaced
+  - [x] Fix the issue with gltf models, gizmos are misplaced (C# Godot bug)
   - [ ] Click outside the gizmo to deselect it
   - [ ] Fix offset
 - [ ] History

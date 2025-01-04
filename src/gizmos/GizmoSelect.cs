@@ -25,13 +25,10 @@ public partial class GizmoSelect : Node3D
             });
             // TODO: handle deselection
             if (result.Count == 0)
-            {
-                // Gizmo.Target = null;
                 return;
-            }
             Node collider = (Node) result["collider"];
-            Gizmo.Target = collider.GetParent<Node3D>();
-            // Gizmo.Target = GetInspectableNode(collider);
+            // Gizmo.Target = collider.GetParent<Node3D>();
+            Gizmo.Target = GetInspectableNode(collider);
         }
     }
     

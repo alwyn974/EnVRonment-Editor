@@ -1,12 +1,11 @@
-[gd_scene load_steps=21 format=3 uid="uid://cfqnt42lo5kmy"]
+[gd_scene load_steps=20 format=3 uid="uid://cfqnt42lo5kmy"]
 
-[ext_resource type="Script" path="res://src/camera/FreelookCamera3D.cs" id="1_50xsv"]
-[ext_resource type="Script" path="res://src/gizmos/Gizmo3DCSharp.cs" id="2_ugnwi"]
-[ext_resource type="Script" path="res://src/gizmos/GizmoSelect.cs" id="3_bdecd"]
+[ext_resource type="Script" uid="uid://bmqg05x2nttry" path="res://src/camera/FreelookCamera3D.cs" id="1_50xsv"]
+[ext_resource type="Script" uid="uid://bmucag0l4sjj5" path="res://src/gizmos/Gizmo3DCSharp.cs" id="2_ugnwi"]
+[ext_resource type="Script" uid="uid://bpyu6evi4mgn" path="res://src/gizmos/GizmoSelect.cs" id="3_bdecd"]
 [ext_resource type="PackedScene" uid="uid://k7cn617qhred" path="res://kenney_mini_dungeon/coin.tscn" id="5_tsyjd"]
 [ext_resource type="PackedScene" uid="uid://bv1ou84a8bc8x" path="res://kenney_mini_dungeon/barrel.tscn" id="6_f8mrt"]
-[ext_resource type="PackedScene" uid="uid://dhf21j1p1p2rn" path="res://test.tscn" id="6_i65dv"]
-[ext_resource type="Script" path="res://src/Node3DInspectable.cs" id="6_wnnhe"]
+[ext_resource type="Script" uid="uid://8oeb71krtcrk" path="res://src/Node3DInspectable.cs" id="6_wnnhe"]
 [ext_resource type="PackedScene" uid="uid://btf1qebgweld5" path="res://assets/models/fire_extinguisher.glb" id="8_06c0q"]
 [ext_resource type="PackedScene" uid="uid://dwbfem22sclq8" path="res://assets/models/servers.glb" id="8_rpgt0"]
 [ext_resource type="PackedScene" uid="uid://4m7fxeuoij8l" path="res://assets/models/plane.glb" id="9_cew8c"]
@@ -65,10 +64,9 @@ shadow_enabled = true
 
 [node name="Scene" type="Node3D" parent="SubViewportContainer/GameView"]
 
-[node name="Gizmo3D" type="Node3D" parent="SubViewportContainer/GameView/Scene" node_paths=PackedStringArray("Target")]
+[node name="Gizmo3D" type="Node3D" parent="SubViewportContainer/GameView/Scene"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.92962, 0)
 script = ExtResource("2_ugnwi")
-Target = NodePath("../Objects/Test")
 
 [node name="Objects" type="Node3D" parent="SubViewportContainer/GameView/Scene" node_paths=PackedStringArray("Gizmo")]
 script = ExtResource("3_bdecd")
@@ -80,9 +78,6 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.459804, 0.061168, -0.038767
 [node name="barrel" parent="SubViewportContainer/GameView/Scene/Objects" instance=ExtResource("6_f8mrt")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.0342803, 0, -1)
 script = ExtResource("6_wnnhe")
-
-[node name="Test" parent="SubViewportContainer/GameView/Scene/Objects" instance=ExtResource("6_i65dv")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.652604, 0, 0)
 
 [node name="Node3DInspectable" type="Node3D" parent="SubViewportContainer/GameView/Scene/Objects"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.55431, 0, 0)
